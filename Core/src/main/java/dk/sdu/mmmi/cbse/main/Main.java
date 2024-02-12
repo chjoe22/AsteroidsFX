@@ -53,6 +53,9 @@ public class Main extends Application {
             if (event.getCode().equals(KeyCode.UP)) {
                 gameData.getKeys().setKey(GameKeys.UP, true);
             }
+            if (event.getCode().equals(KeyCode.SPACE)){
+                gameData.getKeys().setKey(GameKeys.SPACE, true);
+            }
         });
         scene.setOnKeyReleased(event -> {
             if (event.getCode().equals(KeyCode.LEFT)) {
@@ -63,6 +66,9 @@ public class Main extends Application {
             }
             if (event.getCode().equals(KeyCode.UP)) {
                 gameData.getKeys().setKey(GameKeys.UP, false);
+            }
+            if (event.getCode().equals(KeyCode.SPACE)){
+                gameData.getKeys().setKey(GameKeys.SPACE, false);
             }
 
         });
