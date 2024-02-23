@@ -1,5 +1,6 @@
 package dk.sdu.mmmi.cbse.main;
 
+import dk.sdu.mmmi.cbse.common.bullet.Bullet;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.GameKeys;
@@ -29,6 +30,7 @@ public class Main extends Application {
     private final GameData gameData = new GameData();
     private final World world = new World();
     private final Map<Entity, Polygon> polygons = new ConcurrentHashMap<>();
+    private final Pane gameWindow = new Pane();
     
 
     public static void main(String[] args) {
@@ -38,7 +40,6 @@ public class Main extends Application {
     @Override
     public void start(Stage window) throws Exception {
         Text text = new Text(10, 20, "Destroyed asteroids: 0");
-        Pane gameWindow = new Pane();
         gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
         gameWindow.getChildren().add(text);
 
@@ -114,11 +115,28 @@ public class Main extends Application {
 //        for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
 //            postEntityProcessorService.process(gameData, world);
 //        }
+        for (Entity entity : world.getEntities()){
+            if (entity.getX() > gameData.getDisplayWidth() || entity.getY() > gameData.getDisplayHeight() || entity.getY() < 0 || entity.getX() < 0){
+                world.removeEntity(entity);
+            }
+        }
     }
 
     private void draw() {
+        for (Entity polygon : polygons.keySet()){
+            if (!world.getEntities().contains(polygon)){
+                Polygon remove = polygons.get(polygon);
+                polygons.remove(remove);
+                gameWindow.getChildren().remove(remove);
+            }
+        }
         for (Entity entity : world.getEntities()) {
             Polygon polygon = polygons.get(entity);
+            if (polygon == null){
+                polygon = new Polygon(entity.getPolygonCoordinates());
+                polygons.put(entity, polygon);
+                gameWindow.getChildren().add(polygon);
+            }
             polygon.setTranslateX(entity.getX());
             polygon.setTranslateY(entity.getY());
             polygon.setRotate(entity.getRotation());

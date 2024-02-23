@@ -21,7 +21,6 @@ public class PlayerControlSystem implements IEntityProcessingService {
             
         for (Entity player : world.getEntities(Player.class)) {
             if (gameData.getKeys().isDown(GameKeys.LEFT)) {
-                System.out.println("Left");
                 player.setRotation(player.getRotation() - 5);                
             }
             if (gameData.getKeys().isDown(GameKeys.RIGHT)) {
@@ -34,14 +33,11 @@ public class PlayerControlSystem implements IEntityProcessingService {
                 player.setY(player.getY() + changeY);
             }
             if (gameData.getKeys().isDown(GameKeys.SPACE)){
-                System.out.println("This works");
                 for (BulletSPI bulletSPI : getBulletSPIs()){
-                    System.out.println("Inside");
-                    bulletSPI.createBullet(player, gameData);
-
+                    world.addEntity(bulletSPI.createBullet(player, gameData));
                 }
             }
-            
+
         if (player.getX() < 0) {
             player.setX(1);
         }
@@ -57,8 +53,6 @@ public class PlayerControlSystem implements IEntityProcessingService {
         if (player.getY() > gameData.getDisplayHeight()) {
             player.setY(gameData.getDisplayHeight()-1);
         }
-            
-                                        
         }
     }
 
