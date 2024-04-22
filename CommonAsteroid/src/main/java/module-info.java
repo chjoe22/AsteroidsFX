@@ -1,0 +1,3 @@
+module CommonAsteroid {
+    requires Common;
+}

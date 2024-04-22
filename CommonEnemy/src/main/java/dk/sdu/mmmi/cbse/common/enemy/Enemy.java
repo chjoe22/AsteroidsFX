@@ -1,12 +1,8 @@
-package dk.sdu.mmmi.cbse.playersystem;
+package dk.sdu.mmmi.cbse.common.enemy;
 
 import dk.sdu.mmmi.cbse.common.data.Entity;
 
-/**
- *
- * @author Emil
- */
-public class Player extends Entity {
+public class Enemy extends Entity {
     private final double cooldown = 0.25d;
     private double timer;
 
