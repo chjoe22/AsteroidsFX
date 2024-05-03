@@ -13,6 +13,7 @@ public class Entity implements Serializable {
     private double rotation;
 
     private EntityTags tag;
+    private double radius;
 
 
     public String getID() {
@@ -62,4 +63,11 @@ public class Entity implements Serializable {
         return tag;
     }
 
+    public double getRadius() {
+        return radius;
+    }
+
+    public void setRadius(double radius) {
+        this.radius = radius;
+    }
 }

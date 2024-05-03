@@ -23,6 +23,7 @@ public class PlayerControlSystem implements IEntityProcessingService {
 
             ((Player) player).tickbullet(gameData.getDeltaSeconds());
 
+
             if (gameData.getKeys().isDown(GameKeys.LEFT)) {
                 player.setRotation(player.getRotation() - 2);
             }
