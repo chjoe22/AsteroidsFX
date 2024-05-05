@@ -14,6 +14,7 @@ public class Entity implements Serializable {
 
     private EntityTags tag;
     private double radius;
+    private double speed;
 
 
     public String getID() {
@@ -69,5 +70,13 @@ public class Entity implements Serializable {
 
     public void setRadius(double radius) {
         this.radius = radius;
+    }
+
+    public double getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
     }
 }

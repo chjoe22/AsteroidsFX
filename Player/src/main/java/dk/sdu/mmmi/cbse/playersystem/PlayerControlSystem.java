@@ -21,7 +21,7 @@ public class PlayerControlSystem implements IEntityProcessingService {
 
         for (Entity player : world.getEntities(Player.class)) {
 
-            ((Player) player).tickbullet(gameData.getDeltaSeconds());
+            ((Player) player).tick(gameData.getDeltaSeconds());
 
 
             if (gameData.getKeys().isDown(GameKeys.LEFT)) {

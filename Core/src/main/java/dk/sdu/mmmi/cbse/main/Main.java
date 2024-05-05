@@ -12,7 +12,9 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.concurrent.ConcurrentHashMap;
+
 import static java.util.stream.Collectors.toList;
+
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -28,7 +30,7 @@ public class Main extends Application {
     private final World world = new World();
     private final Map<Entity, Polygon> polygons = new ConcurrentHashMap<>();
     private final Pane gameWindow = new Pane();
-    
+
 
     public static void main(String[] args) {
         launch(Main.class);
@@ -51,7 +53,7 @@ public class Main extends Application {
             if (event.getCode().equals(KeyCode.UP)) {
                 gameData.getKeys().setKey(GameKeys.UP, true);
             }
-            if (event.getCode().equals(KeyCode.SPACE)){
+            if (event.getCode().equals(KeyCode.SPACE)) {
                 gameData.getKeys().setKey(GameKeys.SPACE, true);
             }
         });
@@ -65,7 +67,7 @@ public class Main extends Application {
             if (event.getCode().equals(KeyCode.UP)) {
                 gameData.getKeys().setKey(GameKeys.UP, false);
             }
-            if (event.getCode().equals(KeyCode.SPACE)){
+            if (event.getCode().equals(KeyCode.SPACE)) {
                 gameData.getKeys().setKey(GameKeys.SPACE, false);
             }
 
@@ -97,8 +99,11 @@ public class Main extends Application {
             public void handle(long now) {
                 long deltaTime = (now - then) / 1000000;
                 then = now;
+
                 update(deltaTime);
+
                 draw();
+
                 gameData.getKeys().update();
             }
 
@@ -111,27 +116,24 @@ public class Main extends Application {
         for (IEntityProcessingService entityProcessorService : getEntityProcessingServices()) {
             entityProcessorService.process(gameData, world);
         }
-//        for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
-//            postEntityProcessorService.process(gameData, world);
-//        }
-        for (Entity entity : world.getEntities()){
-            if (entity.getX() > gameData.getDisplayWidth() || entity.getY() > gameData.getDisplayHeight() || entity.getY() < 0 || entity.getX() < 0){
-                world.removeEntity(entity);
-            }
+        for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
+            postEntityProcessorService.process(gameData, world);
         }
+
     }
 
     private void draw() {
-        for (Entity polygon : polygons.keySet()){
-            if (!world.getEntities().contains(polygon)){
-                Polygon remove = polygons.get(polygon);
-                polygons.remove(remove);
-                gameWindow.getChildren().remove(remove);
+        for (Entity polygon : polygons.keySet()) {
+            if (!world.getEntities().contains(polygon)) {
+                gameWindow.getChildren().remove(polygons.get(polygon));
+                polygons.remove(polygon);
             }
         }
+
         for (Entity entity : world.getEntities()) {
             Polygon polygon = polygons.get(entity);
-            if (polygon == null){
+
+            if (polygon == null) {
                 polygon = new Polygon(entity.getPolygonCoordinates());
                 polygons.put(entity, polygon);
                 gameWindow.getChildren().add(polygon);

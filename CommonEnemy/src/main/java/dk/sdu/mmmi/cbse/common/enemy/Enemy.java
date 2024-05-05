@@ -6,7 +6,7 @@ public class Enemy extends Entity {
     private final double cooldown = 0.25d;
     private double timer;
 
-    public void tickbullet(double time){
+    public void tick(double time){
         if (timer < cooldown){
             timer += time;
         }

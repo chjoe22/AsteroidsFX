@@ -18,13 +18,13 @@ public class EnemyControlSystem implements IEntityProcessingService {
 
         for (Entity enemy : world.getEntities(Enemy.class)){
 
-            ((Enemy) enemy).tickbullet(gameData.getDeltaSeconds());
+            ((Enemy) enemy).tick(gameData.getDeltaSeconds());
 
             if (Math.random() > 0.7)
                 if (Math.random() > 0.5)
-                    enemy.setRotation(enemy.getRotation() + 1);
+                    enemy.setRotation(enemy.getRotation() + 3);
                 else
-                    enemy.setRotation(enemy.getRotation() - 1);
+                    enemy.setRotation(enemy.getRotation() - 3);
 
             double changeX = Math.cos(Math.toRadians(enemy.getRotation()));
             double changeY = Math.sin(Math.toRadians(enemy.getRotation()));

@@ -5,5 +5,6 @@ public enum EntityTags {
     PLAYER_BULLET,
     ENEMY,
     ENEMY_BULLET,
-    ASTEROID
+    ASTEROID,
+    ASTEROID_SPLIT
 }

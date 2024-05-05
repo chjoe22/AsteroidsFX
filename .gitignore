@@ -30,3 +30,6 @@ replay_pid*
 /Bullet/target/
 /CommonBullet/target/
 /.idea/
+/Collision/target
+/CommonAsteroid/target
+/*/target
