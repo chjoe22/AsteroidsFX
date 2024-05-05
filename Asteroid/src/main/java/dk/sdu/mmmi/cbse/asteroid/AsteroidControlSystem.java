@@ -13,12 +13,13 @@ import java.util.Random;
 public class AsteroidControlSystem implements IEntityProcessingService, AsteroidSPI {
 
     private Random random = new Random();
+    private AsteroidFactory asteroidFactory = new AsteroidFactory();
 
     @Override
     public void process(GameData gameData, World world) {
 
         if (world.getEntities(Asteroid.class).stream().filter(a -> a.getTag().equals(EntityTags.ASTEROID)).count() <= 10){
-            world.addEntity(new AsteroidFactory().createAsteroid(gameData));
+            world.addEntity(asteroidFactory.createAsteroid(gameData));
             System.out.println(world.getEntities(Asteroid.class).size());
         }
 
@@ -50,18 +51,19 @@ public class AsteroidControlSystem implements IEntityProcessingService, Asteroid
     @Override
     public void asteroidSplitter(Entity entity, World world) {
 
-        for (int i = 0; i < random.nextInt(2,3); i++) {
+        for (int i = 0; i < random.nextInt(2,4); i++) {
             Asteroid asteroidSplit = new Asteroid();
-            asteroidSplit.setRadius(entity.getRadius()/random.nextDouble(1.5,2.5));
-
-            new AsteroidFactory().generateAsteroidShape(asteroidSplit);
-
-            asteroidSplit.setSpeed(entity.getSpeed());
-            asteroidSplit.setRotation(entity.getRotation() + random.nextInt(-180, 180));
-            asteroidSplit.setX(entity.getX());
-            asteroidSplit.setY(entity.getY());
+            asteroidSplit.setRadius(entity.getRadius()/random.nextDouble(1.7,2.2));
 
             asteroidSplit.setTag(EntityTags.ASTEROID_SPLIT);
+
+            asteroidFactory.generateAsteroidShape(asteroidSplit);
+
+            asteroidSplit.setSpeed(entity.getSpeed());
+
+            asteroidSplit.setRotation(entity.getRotation() + random.nextInt(-90, 90));
+            asteroidSplit.setX(entity.getX());
+            asteroidSplit.setY(entity.getY());
 
             world.addEntity(asteroidSplit);
         }

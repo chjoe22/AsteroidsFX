@@ -39,21 +39,25 @@ public class Collision implements IPostEntityProcessingService {
                         world.removeEntity(collideEntity);
                     }
 
-                    if (startEntity.getTag().equals(EntityTags.PLAYER) && collideEntity.getTag().equals(EntityTags.ASTEROID)) {
+                    if (startEntity.getTag().equals(EntityTags.PLAYER) && (collideEntity.getTag().equals(EntityTags.ASTEROID) || collideEntity.getTag().equals(EntityTags.ASTEROID_SPLIT))) {
                         world.removeEntity(startEntity);
                         //world.removeEntity(collideEntity);
                     }
 
-                    if (startEntity.getTag().equals(EntityTags.PLAYER_BULLET) && collideEntity.getTag().equals(EntityTags.ASTEROID)){
+                    if ((startEntity.getTag().equals(EntityTags.PLAYER_BULLET) || startEntity.getTag().equals(EntityTags.ENEMY_BULLET)) && (collideEntity.getTag().equals(EntityTags.ASTEROID) || collideEntity.getTag().equals(EntityTags.ASTEROID_SPLIT))){
                         world.removeEntity(startEntity);
                         world.removeEntity(collideEntity);
+
+                        System.out.println("Split: " + collideEntity.getTag());
+
+                        if (collideEntity.getTag().equals(EntityTags.ASTEROID_SPLIT)) continue;
 
                         getAsteroidSPI().stream().findFirst().ifPresent(
                                 asteroidSPI -> asteroidSPI.asteroidSplitter(collideEntity, world)
                         );
                     }
 
-                    if (startEntity.getTag().equals(EntityTags.ASTEROID) && collideEntity.getTag().equals(EntityTags.ASTEROID) || collideEntity.getTag().equals(EntityTags.ASTEROID_SPLIT)) {
+                    if (startEntity.getTag().equals(EntityTags.ASTEROID) && (collideEntity.getTag().equals(EntityTags.ASTEROID) || collideEntity.getTag().equals(EntityTags.ASTEROID_SPLIT))) {
                         collider(startEntity, collideEntity);
                     }
 
