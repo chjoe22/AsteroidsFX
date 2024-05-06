@@ -41,7 +41,6 @@ public class Collision implements IPostEntityProcessingService {
 
                     if (startEntity.getTag().equals(EntityTags.PLAYER) && (collideEntity.getTag().equals(EntityTags.ASTEROID) || collideEntity.getTag().equals(EntityTags.ASTEROID_SPLIT))) {
                         world.removeEntity(startEntity);
-                        //world.removeEntity(collideEntity);
                     }
 
                     if ((startEntity.getTag().equals(EntityTags.PLAYER_BULLET) || startEntity.getTag().equals(EntityTags.ENEMY_BULLET)) && (collideEntity.getTag().equals(EntityTags.ASTEROID) || collideEntity.getTag().equals(EntityTags.ASTEROID_SPLIT))){
@@ -61,7 +60,6 @@ public class Collision implements IPostEntityProcessingService {
                         collider(startEntity, collideEntity);
                     }
 
-                    // Implement enemy bouncing off asteroids
                     if (startEntity.getTag().equals(EntityTags.ENEMY) && collideEntity.getTag().equals(EntityTags.ASTEROID)){
                         collider(startEntity, collideEntity);
                     }
@@ -102,13 +100,13 @@ public class Collision implements IPostEntityProcessingService {
         updateVelocity(entity2, newCollideVX, newCollideVY);
     }
 
-    private static void updateVelocity(Entity asteroid, double entityX, double entityY) {
+    private static void updateVelocity(Entity entity, double entityX, double entityY) {
         double newSpeed = Math.sqrt(entityX * entityX + entityY * entityY);
         double newRotation = Math.toDegrees(Math.atan2(entityY, entityX));
         newRotation = (newRotation < 0) ? newRotation + 360 : newRotation; // Normalize rotation
 
-        asteroid.setSpeed(newSpeed);
-        asteroid.setRotation(newRotation);
+        entity.setSpeed(newSpeed);
+        entity.setRotation(newRotation);
     }
 
     private Collection<? extends AsteroidSPI> getAsteroidSPI(){

@@ -32,13 +32,13 @@ public class AsteroidControlSystem implements IEntityProcessingService, Asteroid
 
             // handle horizontal boundary collisions
             if (asteroid.getX() < 0 || asteroid.getX() > gameData.getDisplayWidth()) {
-                asteroid.setRotation(180 - asteroid.getRotation()); // Reflect horizontally
+                asteroid.setRotation(180 - asteroid.getRotation());
                 asteroid.setX(Math.max(1, Math.min(asteroid.getX(), gameData.getDisplayWidth() - 1)));
             }
 
             // handle vertical boundary collisions
             if (asteroid.getY() < 0 || asteroid.getY() > gameData.getDisplayHeight()) {
-                asteroid.setRotation(-asteroid.getRotation()); // Reflect vertically
+                asteroid.setRotation(-asteroid.getRotation()); 
                 asteroid.setY(Math.max(1, Math.min(asteroid.getY(), gameData.getDisplayHeight() - 1)));
             }
 
