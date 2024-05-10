@@ -9,8 +9,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>dk.sdu.mmmi.cbse.collision</groupId>
-    <artifactId>Collision</artifactId>
+    <artifactId>SplitPackage</artifactId>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -25,10 +24,9 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>dk.sdu.mmmi.cbse.common.asteroid</groupId>
-            <artifactId>CommonAsteroid</artifactId>
+            <groupId>dk.sdu.mmmi.cbse.Common.enemy</groupId>
+            <artifactId>CommonEnemy</artifactId>
             <version>1.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 
