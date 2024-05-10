@@ -13,7 +13,7 @@ public class AsteroidFactory {
 
     public Asteroid createAsteroid(GameData gameData){
         Asteroid asteroid = new Asteroid();
-        asteroid.setSpeed(random.nextDouble(0.5,1));
+        asteroid.setSpeed(random.nextDouble(0.2,0.5));
 
         asteroid.setRadius(random.nextInt(20,30));
 
