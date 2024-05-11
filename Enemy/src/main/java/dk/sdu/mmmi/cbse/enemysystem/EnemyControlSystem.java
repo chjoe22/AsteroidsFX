@@ -5,6 +5,7 @@ import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.enemy.Enemy;
+import dk.sdu.mmmi.cbse.common.enemy.EnemySPI;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 
 import java.util.Collection;
@@ -12,7 +13,7 @@ import java.util.ServiceLoader;
 
 import static java.util.stream.Collectors.toList;
 
-public class EnemyControlSystem implements IEntityProcessingService {
+public class EnemyControlSystem implements IEntityProcessingService, EnemySPI {
     @Override
     public void process(GameData gameData, World world) {
 
@@ -51,6 +52,12 @@ public class EnemyControlSystem implements IEntityProcessingService {
                 enemy.setY(Math.max(1, Math.min(enemy.getY(), gameData.getDisplayHeight() - 1)));
             }
         }
+    }
+
+    @Override
+    public void respawn(Entity entity, GameData gameData, World world) {
+        entity = new EnemyFactory().createEnemyShip(gameData);
+        world.addEntity(entity);
     }
 
     private Collection<? extends BulletSPI> getBulletSPIs() {

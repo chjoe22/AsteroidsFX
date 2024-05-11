@@ -5,6 +5,7 @@ import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.EntityTags;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
+import dk.sdu.mmmi.cbse.common.enemy.EnemySPI;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 
 import java.util.Collection;
@@ -28,6 +29,11 @@ public class Collision implements IPostEntityProcessingService {
                 if (distance <= (startEntity.getRadius() + collideEntity.getRadius())) {
                     if (startEntity.getTag().equals(EntityTags.PLAYER_BULLET) && collideEntity.getTag().equals(EntityTags.ENEMY)){
                         world.removeEntity(collideEntity);
+
+                        getEnemySPI().stream().findFirst().ifPresent(
+                                enemySPI -> enemySPI.respawn(collideEntity ,gameData, world)
+                        );
+
                     }
 
                     if (startEntity.getTag().equals(EntityTags.ENEMY_BULLET) && collideEntity.getTag().equals(EntityTags.PLAYER)){
@@ -111,5 +117,9 @@ public class Collision implements IPostEntityProcessingService {
 
     private Collection<? extends AsteroidSPI> getAsteroidSPI(){
         return ServiceLoader.load(AsteroidSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    }
+
+    private Collection<? extends EnemySPI> getEnemySPI(){
+        return ServiceLoader.load(EnemySPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 }

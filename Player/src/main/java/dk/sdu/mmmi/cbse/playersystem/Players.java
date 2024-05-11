@@ -6,7 +6,7 @@ import dk.sdu.mmmi.cbse.common.data.Entity;
  *
  * @author Emil
  */
-public class Player extends Entity {
+public class Players extends Entity {
     private final double cooldown = 0.25d;
     private double timer;
 
