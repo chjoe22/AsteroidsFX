@@ -30,6 +30,7 @@
         <module>Asteroid</module>
         <module>Collision</module>
         <module>Scoring</module>
+        <module>CommonPlayer</module>
     </modules>
     <properties>
         <java>java</java>
