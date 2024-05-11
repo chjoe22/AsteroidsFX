@@ -7,12 +7,18 @@ import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.Collection;
 import java.util.ServiceLoader;
 
 import static java.util.stream.Collectors.toList;
 
 public class Collision implements IPostEntityProcessingService {
+    HttpClient httpClient = HttpClient.newHttpClient();
 
     @Override
     public void process(GameData gameData, World world) {
@@ -49,6 +55,9 @@ public class Collision implements IPostEntityProcessingService {
 
                         System.out.println("Split: " + collideEntity.getTag());
 
+                        if (startEntity.getTag().equals(EntityTags.PLAYER_BULLET))
+                            updateScoring(20);
+
                         if (collideEntity.getTag().equals(EntityTags.ASTEROID_SPLIT)) continue;
 
                         getAsteroidSPI().stream().findFirst().ifPresent(
@@ -60,7 +69,7 @@ public class Collision implements IPostEntityProcessingService {
                         collider(startEntity, collideEntity);
                     }
 
-                    if (startEntity.getTag().equals(EntityTags.ENEMY) && collideEntity.getTag().equals(EntityTags.ASTEROID)){
+                    if (startEntity.getTag().equals(EntityTags.ENEMY) && (collideEntity.getTag().equals(EntityTags.ASTEROID) || collideEntity.getTag().equals(EntityTags.ASTEROID_SPLIT))){
                         collider(startEntity, collideEntity);
                     }
                 }
@@ -107,6 +116,17 @@ public class Collision implements IPostEntityProcessingService {
 
         entity.setSpeed(newSpeed);
         entity.setRotation(newRotation);
+    }
+
+    public void updateScoring(int score){
+        HttpRequest httpRequest = HttpRequest.newBuilder().uri(URI.create("http://localhost:8080/attributes/score/update/" + score)).PUT(HttpRequest.BodyPublishers.ofString("")).build();
+        try {
+            HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private Collection<? extends AsteroidSPI> getAsteroidSPI(){
