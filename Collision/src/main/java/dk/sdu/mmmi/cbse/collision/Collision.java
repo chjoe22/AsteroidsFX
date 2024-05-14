@@ -24,9 +24,9 @@ public class Collision implements IPostEntityProcessingService {
                 }
 
 
-                double distance = Math.sqrt(Math.pow(startEntity.getX() - collideEntity.getX(), 2) + Math.pow(startEntity.getY() - collideEntity.getY(), 2));
 
-                if (distance <= (startEntity.getRadius() + collideEntity.getRadius())) {
+
+                if (collision(startEntity, collideEntity)) {
                     if (startEntity.getTag().equals(EntityTags.PLAYER_BULLET) && collideEntity.getTag().equals(EntityTags.ENEMY)){
                         world.removeEntity(collideEntity);
 
@@ -63,18 +63,23 @@ public class Collision implements IPostEntityProcessingService {
                     }
 
                     if (startEntity.getTag().equals(EntityTags.ASTEROID) && (collideEntity.getTag().equals(EntityTags.ASTEROID) || collideEntity.getTag().equals(EntityTags.ASTEROID_SPLIT))) {
-                        collider(startEntity, collideEntity);
+                        colliderCalculation(startEntity, collideEntity);
                     }
 
                     if (startEntity.getTag().equals(EntityTags.ENEMY) && collideEntity.getTag().equals(EntityTags.ASTEROID)){
-                        collider(startEntity, collideEntity);
+                        colliderCalculation(startEntity, collideEntity);
                     }
                 }
             }
         }
     }
 
-    private void collider(Entity entity1, Entity entity2){
+    public boolean collision(Entity first, Entity second){
+        double distance = Math.sqrt(Math.pow(first.getX() - second.getX(), 2) + Math.pow(first.getY() - second.getY(), 2));
+        return distance <= (first.getRadius() + second.getRadius());
+    }
+
+    private void colliderCalculation(Entity entity1, Entity entity2){
         double startAsteroidVX = Math.cos(Math.toRadians(entity1.getRotation())) * entity1.getSpeed();
         double startAsteroidVY = Math.sin(Math.toRadians(entity1.getRotation())) * entity1.getSpeed();
 
