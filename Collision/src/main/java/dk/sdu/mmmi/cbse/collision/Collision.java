@@ -66,7 +66,7 @@ public class Collision implements IPostEntityProcessingService {
                         colliderCalculation(startEntity, collideEntity);
                     }
 
-                    if (startEntity.getTag().equals(EntityTags.ENEMY) && collideEntity.getTag().equals(EntityTags.ASTEROID)){
+                    if (startEntity.getTag().equals(EntityTags.ENEMY) && (collideEntity.getTag().equals(EntityTags.ASTEROID) || collideEntity.getTag().equals(EntityTags.ASTEROID_SPLIT))){
                         colliderCalculation(startEntity, collideEntity);
                     }
                 }

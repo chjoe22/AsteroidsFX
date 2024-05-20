@@ -9,3 +9,6 @@ module Asteroid {
     provides IEntityProcessingService with dk.sdu.mmmi.cbse.asteroid.AsteroidControlSystem;
     provides AsteroidSPI with dk.sdu.mmmi.cbse.asteroid.AsteroidControlSystem;
 }
+
+
+

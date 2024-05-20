@@ -11,3 +11,5 @@ module Enemy {
     provides IEntityProcessingService with dk.sdu.mmmi.cbse.enemysystem.EnemyControlSystem;
     provides EnemySPI with dk.sdu.mmmi.cbse.enemysystem.EnemyControlSystem;
 }
+
+
