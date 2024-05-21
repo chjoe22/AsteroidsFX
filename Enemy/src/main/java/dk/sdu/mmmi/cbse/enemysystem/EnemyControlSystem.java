@@ -40,15 +40,15 @@ public class EnemyControlSystem implements IEntityProcessingService, EnemySPI {
                             }
                     );
                 }
-
+            // Handle horizontal boundary check
             if (enemy.getX() < 0 || enemy.getX() > gameData.getDisplayWidth()) {
-                enemy.setRotation(180 - enemy.getRotation()); // Reflect horizontally
+                enemy.setRotation(180 - enemy.getRotation());
                 enemy.setX(Math.max(1, Math.min(enemy.getX(), gameData.getDisplayWidth() - 1)));
             }
 
-            // handle vertical boundary collisions
+            // handle vertical boundary check
             if (enemy.getY() < 0 || enemy.getY() > gameData.getDisplayHeight()) {
-                enemy.setRotation(-enemy.getRotation()); // Reflect vertically
+                enemy.setRotation(-enemy.getRotation());
                 enemy.setY(Math.max(1, Math.min(enemy.getY(), gameData.getDisplayHeight() - 1)));
             }
         }
